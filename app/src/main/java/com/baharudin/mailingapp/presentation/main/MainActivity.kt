@@ -3,6 +3,7 @@ package com.baharudin.mailingapp.presentation.main
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
@@ -25,16 +26,28 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val navigation = supportFragmentManager.findFragmentById(R.id.fragment_view) as NavHostFragment
+        val navigation = supportFragmentManager.findFragmentById(R.id.fragmentContainerView) as NavHostFragment
         navigationController = navigation.findNavController()
         binding.apply {
             bottomNavigationView.setupWithNavController(navigationController)
+            navigation.findNavController().addOnDestinationChangedListener{ _, destination, _ ->
+                when (destination.id) {
+                    R.id.homeFragment2, R.id.profileFragment ->
+                        bottomNavigationView.visibility = View.VISIBLE
+                    else -> bottomNavigationView.visibility = View.GONE
+                }
+            }
         }
     }
 
     override fun onStart() {
         super.onStart()
         checkIsLoggedIn()
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        finish()
     }
 
     private fun checkIsLoggedIn(){
