@@ -21,8 +21,8 @@ class LetterInViewModel @Inject constructor(
     private val state = MutableStateFlow<LetterInViewState>(LetterInViewState.Init)
     val mState: StateFlow<LetterInViewState> get() = state
 
-    private val products = MutableStateFlow<List<LetterEntity>>(mutableListOf())
-    val mProducts: StateFlow<List<LetterEntity>> get() = products
+    private val _letter = MutableStateFlow<List<LetterEntity>>(mutableListOf())
+    val mLetter: StateFlow<List<LetterEntity>> get() = _letter
 
     private fun setLoading(){
         state.value = LetterInViewState.IsLoading(true)
@@ -37,10 +37,10 @@ class LetterInViewModel @Inject constructor(
     }
 
     init {
-        fetchAllMyProducts()
+        fetchLetterIn()
     }
 
-    fun fetchAllMyProducts(){
+    fun fetchLetterIn(){
         viewModelScope.launch {
             letterInUseCase.invoke()
                 .onStart {
@@ -54,7 +54,7 @@ class LetterInViewModel @Inject constructor(
                     hideLoading()
                     when(result){
                         is BaseResult.Success -> {
-                            products.value = result.data
+                            _letter.value = result.data
                         }
                         is BaseResult.Error -> {
                             showToast(result.rawResponse.message)

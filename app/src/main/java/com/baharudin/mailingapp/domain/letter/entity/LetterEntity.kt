@@ -1,5 +1,10 @@
 package com.baharudin.mailingapp.domain.letter.entity
 
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
+
+
+@Parcelize
 data class LetterEntity(
     val v: Int,
     val id: String,
@@ -11,4 +16,4 @@ data class LetterEntity(
     val letterKinds: String,
     val letterNumber: Int,
     val senderIdentity: String
-)
+) : Parcelable
