@@ -11,6 +11,7 @@ import androidx.navigation.ui.setupWithNavController
 import com.baharudin.mailingapp.R
 import com.baharudin.mailingapp.core.SharedPrefs
 import com.baharudin.mailingapp.databinding.ActivityMainBinding
+import com.baharudin.mailingapp.domain.login.entity.LoginEntity
 import com.baharudin.mailingapp.presentation.login.LoginActivity
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -21,6 +22,8 @@ class MainActivity : AppCompatActivity() {
     lateinit var navigationController : NavController
     @Inject
     lateinit var sharedPrefs: SharedPrefs
+    var loginEntity: LoginEntity? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -28,6 +31,7 @@ class MainActivity : AppCompatActivity() {
 
         val navigation = supportFragmentManager.findFragmentById(R.id.fragmentContainerView) as NavHostFragment
         navigationController = navigation.findNavController()
+        getIntentData()
         binding.apply {
             bottomNavigationView.setupWithNavController(navigationController)
             navigation.findNavController().addOnDestinationChangedListener{ _, destination, _ ->
@@ -37,6 +41,12 @@ class MainActivity : AppCompatActivity() {
                     else -> bottomNavigationView.visibility = View.GONE
                 }
             }
+        }
+    }
+
+    private fun getIntentData() {
+        intent.getParcelableExtra<LoginEntity>(LOGIN_ID)?.let {
+            loginEntity = it
         }
     }
 
@@ -67,5 +77,9 @@ class MainActivity : AppCompatActivity() {
     }
     override fun onSupportNavigateUp(): Boolean {
         return navigationController.navigateUp() || super.onSupportNavigateUp()
+    }
+
+    companion object{
+        const val LOGIN_ID = "LOGIN_ID"
     }
 }

@@ -2,8 +2,10 @@ package com.baharudin.mailingapp.presentation.common.extention
 
 import android.app.AlertDialog
 import android.content.Context
+import android.os.Looper
 import android.widget.Toast
 import com.baharudin.mailingapp.R
+import java.util.logging.Handler
 
 fun Context.showToast(message: String){
     Toast.makeText(this, message, Toast.LENGTH_LONG).show()
@@ -16,4 +18,8 @@ fun Context.showGenericAlertDialog(message: String){
             dialog.dismiss()
         }
     }.show()
+}
+
+fun withDelay(delay: Long = 100, block: () -> Unit) {
+    android.os.Handler(Looper.getMainLooper()).postDelayed(Runnable(block), delay)
 }

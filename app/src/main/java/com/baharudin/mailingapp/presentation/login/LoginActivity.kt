@@ -30,9 +30,10 @@ class LoginActivity : AppCompatActivity() {
 
     private lateinit var binding : ActivityLoginBinding
     private val viewModel : LoginViewModel by viewModels()
+    private val loginEntity : LoginEntity? = null
     private val openRegisterActivity = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
         if (result.resultCode == RESULT_OK) {
-            goToMainActivity()
+            goToMainActivity(loginEntity)
         }
     }
 
@@ -123,7 +124,7 @@ class LoginActivity : AppCompatActivity() {
     private fun handleSuccessLogin(loginEntity: LoginEntity){
         sharedPrefs.saveToken(loginEntity.token)
         showToast("Welcome")
-        goToMainActivity()
+        goToMainActivity(loginEntity)
     }
 
     private fun goToRegisterActivity(){
@@ -132,8 +133,10 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
-    private fun goToMainActivity(){
-        startActivity(Intent(this@LoginActivity, MainActivity::class.java))
+    private fun goToMainActivity(loginEntity: LoginEntity?){
+        startActivity(Intent(this@LoginActivity, MainActivity::class.java)
+            .putExtra(MainActivity.LOGIN_ID, loginEntity)
+        )
         finish()
     }
 }
