@@ -3,16 +3,20 @@ package com.baharudin.mailingapp.presentation.main
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
+import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.setupWithNavController
+import androidx.viewpager2.widget.ViewPager2
 import com.baharudin.mailingapp.R
 import com.baharudin.mailingapp.core.SharedPrefs
 import com.baharudin.mailingapp.databinding.ActivityMainBinding
 import com.baharudin.mailingapp.domain.login.entity.LoginEntity
 import com.baharudin.mailingapp.presentation.login.LoginActivity
+import com.baharudin.mailingapp.presentation.main.profile.ProfileFragment
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -23,6 +27,8 @@ class MainActivity : AppCompatActivity() {
     @Inject
     lateinit var sharedPrefs: SharedPrefs
     var loginEntity: LoginEntity? = null
+    private lateinit var fragments: ArrayList<Fragment>
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,6 +37,7 @@ class MainActivity : AppCompatActivity() {
 
         val navigation = supportFragmentManager.findFragmentById(R.id.fragmentContainerView) as NavHostFragment
         navigationController = navigation.findNavController()
+        initPaging()
         getIntentData()
         binding.apply {
             bottomNavigationView.setupWithNavController(navigationController)
@@ -45,7 +52,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun getIntentData() {
-        intent.getParcelableExtra<LoginEntity>(LOGIN_ID)?.let {
+        intent.getParcelableExtra<LoginEntity>(EXTRA_DATA)?.let {
             loginEntity = it
         }
     }
@@ -79,7 +86,15 @@ class MainActivity : AppCompatActivity() {
         return navigationController.navigateUp() || super.onSupportNavigateUp()
     }
 
+    private fun initPaging() {
+        loginEntity?.let {
+            fragments = arrayListOf(
+                ProfileFragment.newInstance(it),
+            )
+        }
+    }
+
     companion object{
-        const val LOGIN_ID = "LOGIN_ID"
+        const val EXTRA_DATA = "EXTRA_DATA"
     }
 }

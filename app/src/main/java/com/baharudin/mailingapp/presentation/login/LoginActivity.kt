@@ -123,7 +123,7 @@ class LoginActivity : AppCompatActivity() {
 
     private fun handleSuccessLogin(loginEntity: LoginEntity){
         sharedPrefs.saveToken(loginEntity.token)
-        showToast("Welcome")
+        showToast("Welcome ${loginEntity.userId}")
         goToMainActivity(loginEntity)
     }
 
@@ -135,7 +135,7 @@ class LoginActivity : AppCompatActivity() {
 
     private fun goToMainActivity(loginEntity: LoginEntity?){
         startActivity(Intent(this@LoginActivity, MainActivity::class.java)
-            .putExtra(MainActivity.LOGIN_ID, loginEntity)
+            .putExtra(MainActivity.EXTRA_DATA, loginEntity)
         )
         finish()
     }

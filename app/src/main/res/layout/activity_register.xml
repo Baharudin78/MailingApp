@@ -81,7 +81,7 @@
                 android:layout_width="match_parent"
                 android:id="@+id/phone_edit_text"
                 android:inputType="textEmailAddress"
-                android:hint="@string/hint_register_email"
+                android:hint="@string/hint_register_phome"
                 android:layout_height="wrap_content"/>
         </com.google.android.material.textfield.TextInputLayout>
 

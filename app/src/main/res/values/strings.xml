@@ -33,6 +33,7 @@
     <string name="error_product_name_not_valid">Product name is not valid</string>
     <string name="error_price_not_valid">Price is not valid</string>
     <string name="hint_register_email">Your email</string>
+    <string name="hint_register_emai">Your email</string>
     <string name="hint_register_phome">Your Phone</string>
     <string name="hint_register_password">Password</string>
     <string name="content_desc_create_new_product">Create new product</string>
