@@ -3,10 +3,7 @@
 
     <item android:id="@+id/homeFragment2"
         android:title="Dashboard"
+        android:visible="true"
         android:icon="@drawable/ic_home"/>
-
-    <item android:id="@+id/profileFragment"
-        android:title="Profil"
-        android:icon="@drawable/ic_person"/>
 
 </menu>

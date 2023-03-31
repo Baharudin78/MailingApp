@@ -21,7 +21,11 @@ class DetailActivity : AppCompatActivity() {
         val letterResult = intent.getParcelableExtra<LetterEntity>(LETTER)
 
         binding.apply {
-            tvJenisSurat.text = letterResult?.letterKinds
+            if (letterResult?.letterKinds == "letter_in"){
+                tvJenisSurat.text = "Surat Masuk"
+            }else{
+                tvJenisSurat.text = "Surat Keluar"
+            }
             tvDeskripsi.text = letterResult?.letterDiscription
             tvNumber.text = letterResult?.letterNumber.toString()
             tvSender.text = letterResult?.senderIdentity

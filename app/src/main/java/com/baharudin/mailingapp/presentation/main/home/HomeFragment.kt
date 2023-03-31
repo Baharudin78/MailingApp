@@ -6,6 +6,7 @@ import android.view.View
 import androidx.fragment.app.Fragment
 import com.baharudin.mailingapp.R
 import com.baharudin.mailingapp.databinding.FragmentHomeBinding
+import com.baharudin.mailingapp.presentation.main.create.AddLetterActivity
 import com.baharudin.mailingapp.presentation.main.letterin.LetterInActivity
 import com.baharudin.mailingapp.presentation.main.letterout.LetterOutActivity
 import dagger.hilt.android.AndroidEntryPoint
@@ -27,6 +28,10 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
             }
             cardMailOut.setOnClickListener {
                 val intent = Intent(requireContext(), LetterOutActivity::class.java)
+                startActivity(intent)
+            }
+            createFab.setOnClickListener {
+                val intent = Intent(requireContext(), AddLetterActivity::class.java)
                 startActivity(intent)
             }
         }

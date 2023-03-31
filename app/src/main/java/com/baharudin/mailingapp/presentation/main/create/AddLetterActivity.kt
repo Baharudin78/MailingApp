@@ -43,6 +43,9 @@ class AddLetterActivity : AppCompatActivity() {
         binding = ActivityAddLetterBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        binding.toolbar.setNavigationOnClickListener {
+            onBackPressed()
+        }
         setupAdapterLetter()
         setupListFilter()
         sendLetter()
@@ -65,34 +68,12 @@ class AddLetterActivity : AppCompatActivity() {
                 )
             }
         }
-
-        binding.lyDate.setOnClickListener {
-            val newCalendar: Calendar = Calendar.getInstance()
-
-            val datePickerDialog = DatePickerDialog(
-                this,
-                { view, year, monthOfYear, dayOfMonth ->
-                    val newDate: Calendar = Calendar.getInstance()
-                    newDate.set(year, monthOfYear, dayOfMonth)
-                    val dateFormatter = SimpleDateFormat("dd-MM-yyyy", Locale.US)
-                    binding.inputTanggal.setText(dateFormatter.format(newDate.getTime()))
-                },
-                newCalendar.get(Calendar.YEAR),
-                newCalendar.get(Calendar.MONTH),
-                newCalendar.get(Calendar.DAY_OF_MONTH)
-            )
-
-            datePickerDialog.show()
-        }
-
-
     }
 
     private fun setupAdapterLetter(){
         val filterAdapter = LetterKindsAdapter(dataList)
         filterAdapter.setItemClickListener(object : LetterKindsAdapter.OnItemClickListener{
             override fun onClick(filterModel: LetterKindEntity) {
-                Toast.makeText(this@AddLetterActivity, "${filterModel.name}", Toast.LENGTH_SHORT).show()
                 binding.tvLetterKinds.text = filterModel.name
             }
         })
@@ -111,7 +92,7 @@ class AddLetterActivity : AppCompatActivity() {
                 binding.inputTanggal.text.toString() != "" &&
                 binding.inputNoSurat.text.toString() != ""
             ){
-                var param : HashMap<String, RequestBody> = HashMap<String, RequestBody>()
+                val param : HashMap<String, RequestBody> = HashMap<String, RequestBody>()
                 param.apply {
                     param["sender_identity"] = createRequestBody(binding.inputNama.text.toString())
                     param["letter_destination"]= createRequestBody(binding.inputLokasi.text.toString())
