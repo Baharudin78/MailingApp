@@ -6,14 +6,11 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class LetterEntity(
-    val v: Int,
-    val id: String,
-    val createdAt: String,
-    val imagesLetterUrl: String,
-    val letterDate: String,
-    val letterDestination: String,
-    val letterDiscription: String,
-    val letterKinds: String,
-    val letterNumber: Int,
-    val senderIdentity: String
+    val imagesLetterUrl: String? = null,
+    val letterDate: String? = null,
+    val letterDestination: String? = null,
+    val letterDiscription: String? = null,
+    val letterKinds: String? = null,
+    val letterNumber: Int? = null,
+    val senderIdentity: String? = null
 ) : Parcelable

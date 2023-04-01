@@ -2,8 +2,12 @@ package com.baharudin.mailingapp.presentation.main.create
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.baharudin.mailingapp.data.common.utils.WrappedResponse
+import com.baharudin.mailingapp.data.letter.remote.dto.LetterDto
+import com.baharudin.mailingapp.data.login.remote.dto.LoginResponse
 import com.baharudin.mailingapp.domain.common.base.BaseResult
 import com.baharudin.mailingapp.domain.letter.usecase.PostLetterUseCase
+import com.baharudin.mailingapp.presentation.login.LoginViewState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -39,20 +43,15 @@ class AddLetterViewModel @Inject constructor(
     }
 
     fun uploadLetter(
-        param : HashMap<String, @JvmSuppressWildcards RequestBody>,
-        partFile : MultipartBody.Part?,
-    ){
+        requestBodyMap: MutableMap<String,
+                @JvmSuppressWildcards RequestBody>,
+        letterPart: MultipartBody.Part?
+    ) {
         viewModelScope.launch {
-            postLetterUseCase.invoke(param, partFile)
-                .onStart {
-                    setLoading()
-                }
-                .catch { exception ->
-                    hideLoading()
-                    showToast(exception.message.toString())
-                }
-                .collect{ result ->
-                    when(result) {
+            try {
+                setLoading()
+                postLetterUseCase.invoke(requestBodyMap, letterPart).collect { result ->
+                    when (result) {
                         is BaseResult.Success -> {
                             hideLoading()
                             successCreate()
@@ -62,6 +61,10 @@ class AddLetterViewModel @Inject constructor(
                         }
                     }
                 }
+            } catch (exception: Exception) {
+                hideLoading()
+                showToast(exception.message.toString())
+            }
         }
     }
 }
@@ -71,5 +74,7 @@ sealed class AddLetterViewState{
     object SuccessCreate : AddLetterViewState()
     data class IsLoading(val isLoading : Boolean) : AddLetterViewState()
     data class ShowToast(val message : String) : AddLetterViewState()
+    data class ErrorUpload(val rawResponse : WrappedResponse<LetterDto>) : AddLetterViewState()
+
 }
 

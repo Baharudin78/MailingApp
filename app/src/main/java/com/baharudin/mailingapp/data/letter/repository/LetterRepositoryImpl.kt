@@ -27,9 +27,6 @@ class LetterRepositoryImpl @Inject constructor(
                 body.data?.forEach { letterResponse ->
                     letter.add(
                         LetterEntity(
-                            letterResponse.code,
-                            letterResponse.id,
-                            letterResponse.createdAt,
                             letterResponse.imagesLetterUrl,
                             letterResponse.letterDate,
                             letterResponse.letterDestination,
@@ -59,9 +56,6 @@ class LetterRepositoryImpl @Inject constructor(
                 body.data?.forEach { letterResponse ->
                     letter.add(
                         LetterEntity(
-                            letterResponse.code,
-                            letterResponse.id,
-                            letterResponse.createdAt,
                             letterResponse.imagesLetterUrl,
                             letterResponse.letterDate,
                             letterResponse.letterDestination,
@@ -83,32 +77,38 @@ class LetterRepositoryImpl @Inject constructor(
     }
 
     override suspend fun postLetter(
-        param: HashMap<String, RequestBody>,
+        param: MutableMap<String, RequestBody>,
         partFile: MultipartBody.Part?
     ): Flow<BaseResult<LetterEntity, WrappedResponse<LetterDto>>> {
         return flow {
-            val response = letterApi.addLetter(param, partFile!!)
-            if (response.isSuccessful){
-                val body = response.body()!!
-                val letter = LetterEntity(
-                    body.data?.code!!,
-                    body.data?.id!!,
-                    body.data?.createdAt!!,
-                    body.data?.imagesLetterUrl!!,
-                    body.data?.letterDate!!,
-                    body.data?.letterDestination!!,
-                    body.data?.letterDiscription!!,
-                    body.data?.letterKinds!!,
-                    body.data?.letterNumber!!,
-                    body.data?.senderIdentity!!
-                )
-                emit(BaseResult.Success(letter))
-            }else{
-                val type = object : TypeToken<WrappedResponse<LetterDto>>(){}.type
-                val err = Gson().fromJson<WrappedResponse<LetterDto>>(response.errorBody()!!.charStream(), type)!!
-                err.status = response.code()
-                emit(BaseResult.Error(err))
+            try {
+                val response = if (partFile != null) {
+                    letterApi.addLetter(param, partFile)
+                } else {
+                    letterApi.addLetter(param, null)
+                }
+                if (response.isSuccessful){
+                    val body = response.body()!!
+                    val letter = LetterEntity(
+                        imagesLetterUrl = body.data?.imagesLetterUrl,
+                        letterDate = body.data?.letterDate,
+                        letterDiscription = body.data?.letterDiscription,
+                        letterKinds = body.data?.letterKinds,
+                        letterNumber = body.data?.letterNumber,
+                        senderIdentity = body.data?.senderIdentity,
+                        letterDestination = body.data?.letterDestination
+                    )
+                    emit(BaseResult.Success(letter))
+                }else{
+                    val type = object : TypeToken<WrappedResponse<LetterDto>>(){}.type
+                    val err = Gson().fromJson<WrappedResponse<LetterDto>>(response.errorBody()!!.charStream(), type)!!
+                    err.status = response.code()
+                    emit(BaseResult.Error(err))
+                }
+            } catch (e: Exception) {
+                emit(BaseResult.Error(WrappedResponse<LetterDto>( e.message ?: "Unknown error",null)))
             }
         }
     }
+
 }
