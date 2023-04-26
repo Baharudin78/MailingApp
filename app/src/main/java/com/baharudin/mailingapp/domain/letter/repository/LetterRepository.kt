@@ -13,7 +13,7 @@ interface LetterRepository {
     suspend fun getLetterIn() : Flow<BaseResult<List<LetterEntity>, WrappedListResponse<LetterDto>>>
     suspend fun getLetterOut() : Flow<BaseResult<List<LetterEntity>, WrappedListResponse<LetterDto>>>
     suspend fun postLetter(
-        param : HashMap<String, @JvmSuppressWildcards RequestBody>,
+        param : MutableMap<String, @JvmSuppressWildcards RequestBody>,
         partFile: MultipartBody.Part?,
     ) : Flow<BaseResult<LetterEntity, WrappedResponse<LetterDto>>>
 }

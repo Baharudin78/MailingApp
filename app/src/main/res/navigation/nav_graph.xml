@@ -8,8 +8,4 @@
         android:id="@+id/homeFragment2"
         android:name="com.baharudin.mailingapp.presentation.main.home.HomeFragment"
         android:label="HomeFragment" />
-    <fragment
-        android:id="@+id/profileFragment"
-        android:name="com.baharudin.mailingapp.presentation.main.profile.ProfileFragment"
-        android:label="ProfileFragment" />
 </navigation>

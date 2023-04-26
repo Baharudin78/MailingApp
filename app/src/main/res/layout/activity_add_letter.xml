@@ -82,7 +82,7 @@
                             android:layout_gravity="center"
                             android:layout_marginStart="20dp"
                             android:layout_marginEnd="20dp"
-                            android:text="Mohon jangan berikan laporan palsu!"
+                            android:text="Mohon Periksa Sebelum Input"
                             android:textColor="@color/white"
                             android:textSize="18sp" />
 
@@ -101,7 +101,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginBottom="10dp"
-                            android:text="Unggah Foto Bukti laporan"
+                            android:text="Unggah Foto Surat"
                             android:textColor="@color/black"
                             android:textSize="14sp"
                             android:textStyle="bold" />
@@ -136,7 +136,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Nama Pelapor"
+                            android:text="Nama Petugas"
                             android:textColor="@color/black"
                             android:textSize="14sp"
                             android:textStyle="bold" />
@@ -146,7 +146,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="50dp"
                             android:backgroundTint="@android:color/holo_blue_light"
-                            android:hint="Masukan nama Anda"
+                            android:hint="Masukan nama Petugas"
                             android:imeOptions="actionNext"
                             android:maxLines="1"
                             android:singleLine="true"
@@ -197,7 +197,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Lokasi Kejadian"
+                            android:text="Alamat Surat"
                             android:textColor="@color/black"
                             android:textSize="14sp"
                             android:textStyle="bold" />
@@ -212,7 +212,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:backgroundTint="@android:color/holo_blue_light"
-                                android:hint="Masukan lokasi kejadian"
+                                android:hint="Masukan alamat surat"
                                 android:scrollbars="vertical"
                                 android:textColor="@color/black"
                                 android:textSize="16sp" />
@@ -233,7 +233,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Tanggal Kejadian"
+                            android:text="Tanggal Surat"
                             android:textColor="@color/black"
                             android:textSize="14sp"
                             android:textStyle="bold" />
@@ -243,9 +243,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="50dp"
                             android:backgroundTint="@android:color/holo_blue_light"
-                            android:focusableInTouchMode="false"
-                            android:hint="Masukan tanggal"
-                            android:imeOptions="actionNext"
+                            android:hint="hh/bb/tttt"
                             android:inputType="date"
                             android:maxLines="1"
                             android:textColor="@color/black"
@@ -307,7 +305,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Isi Laporan"
+                            android:text="Isi Surat"
                             android:textColor="@color/black"
                             android:textSize="14sp"
                             android:textStyle="bold" />
@@ -328,7 +326,7 @@
                                 android:layout_marginEnd="10dp"
                                 android:background="@android:color/transparent"
                                 android:gravity="top"
-                                android:hint="Masukan laporan anda"
+                                android:hint="Masukan isi surat anda"
                                 android:scrollbars="vertical"
                                 android:textColor="@color/black"
                                 android:textSize="16sp" />
@@ -358,5 +356,16 @@
         android:theme="@style/FabExtendedMaterialTheme"
         app:icon="@drawable/ic_send"
         app:iconTint="@color/white" />
+
+    <ProgressBar
+        android:visibility="gone"
+        android:id="@+id/loading_progress_bar"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_gravity="center"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

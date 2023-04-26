@@ -29,7 +29,11 @@ class LetterInAdapter(
 
     inner class LetterViewHolder(private val itemBinding: ItemLetterBinding) : RecyclerView.ViewHolder(itemBinding.root){
         fun bind(letter: LetterEntity){
-            itemBinding.tvName.text = letter.letterKinds
+            if (letter.letterKinds == "letter_in"){
+                itemBinding.tvName.text = "Surat Masuk"
+            }else{
+                itemBinding.tvName.text = "Surat Keluar"
+            }
             itemBinding.tvAlias.text = letter.letterDate
 
             Glide.with(itemBinding.root.context)

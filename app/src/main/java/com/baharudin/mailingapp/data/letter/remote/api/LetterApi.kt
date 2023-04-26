@@ -19,7 +19,7 @@ interface LetterApi {
     @POST("api/letter")
     suspend fun addLetter(
         @PartMap param: Map<String, @JvmSuppressWildcards RequestBody>,
-        @Part foto : MultipartBody.Part,
+        @Part foto : MultipartBody.Part?,
     ) : Response<WrappedResponse<LetterDto>>
 
 }

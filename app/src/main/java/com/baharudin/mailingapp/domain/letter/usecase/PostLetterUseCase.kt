@@ -13,7 +13,7 @@ import javax.inject.Inject
 class PostLetterUseCase @Inject constructor(
     private val letterRepository: LetterRepository
 ) {
-    suspend fun invoke(param : HashMap<String, @JvmSuppressWildcards RequestBody>, partFile : MultipartBody.Part?) : Flow<BaseResult<LetterEntity, WrappedResponse<LetterDto>>> {
+    suspend fun invoke(param : MutableMap<String, @JvmSuppressWildcards RequestBody>, partFile : MultipartBody.Part?) : Flow<BaseResult<LetterEntity, WrappedResponse<LetterDto>>> {
         return letterRepository.postLetter(param, partFile)
     }
 }

@@ -1,16 +1,15 @@
 package com.baharudin.mailingapp.presentation.main
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.View
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.setupWithNavController
-import androidx.viewpager2.widget.ViewPager2
 import com.baharudin.mailingapp.R
 import com.baharudin.mailingapp.core.SharedPrefs
 import com.baharudin.mailingapp.databinding.ActivityMainBinding
@@ -43,7 +42,7 @@ class MainActivity : AppCompatActivity() {
             bottomNavigationView.setupWithNavController(navigationController)
             navigation.findNavController().addOnDestinationChangedListener{ _, destination, _ ->
                 when (destination.id) {
-                    R.id.homeFragment2, R.id.profileFragment ->
+                    R.id.homeFragment2->
                         bottomNavigationView.visibility = View.VISIBLE
                     else -> bottomNavigationView.visibility = View.GONE
                 }

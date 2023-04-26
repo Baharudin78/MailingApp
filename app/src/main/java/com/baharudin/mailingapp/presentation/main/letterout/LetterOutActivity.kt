@@ -32,18 +32,18 @@ class LetterOutActivity : AppCompatActivity() {
         binding = ActivityLetterOutBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        goToCreatePage()
         setupRecycleview()
         fetchLetterIn()
         initObserver()
 
-    }
-
-    private fun goToCreatePage(){
-        binding.createFab.setOnClickListener {
-            val intent = Intent(this, AddLetterActivity::class.java)
-            startActivity(intent)
+        binding.apply {
+            swipeLayout.setOnRefreshListener {
+                swipeLayout.isRefreshing = true
+                viewModel.fetchLetterOut()
+                swipeLayout.isRefreshing = false
+            }
         }
+
     }
 
     private fun setupRecycleview(){
