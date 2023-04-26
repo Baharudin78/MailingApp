@@ -1,13 +1,19 @@
 package com.baharudin.mailingapp.data.common.module
 
+import android.content.Context
 import com.baharudin.mailingapp.core.Constats.BASE_URL
 import com.baharudin.mailingapp.core.SharedPrefs
 import com.baharudin.mailingapp.data.common.utils.RequestInterceptor
+import com.chuckerteam.chucker.api.ChuckerCollector
+import com.chuckerteam.chucker.api.ChuckerInterceptor
+import com.chuckerteam.chucker.api.RetentionManager
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
@@ -46,7 +52,10 @@ object NetworkModule{
 
     @Singleton
     @Provides
-    fun provideOkHttpClient(requestInterceptor: RequestInterceptor) : OkHttpClient{
+    fun provideOkHttpClient(
+        requestInterceptor: RequestInterceptor,
+        chuckerInterceptor : ChuckerInterceptor
+    ) : OkHttpClient{
         return OkHttpClient.Builder().apply {
             connectTimeout(60, TimeUnit.SECONDS)
             writeTimeout(60, TimeUnit.SECONDS)
